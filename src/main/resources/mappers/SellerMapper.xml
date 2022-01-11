@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.jg.test.lesson04.dao.SellerDAO">
+ 	<insert id="insertSeller" parameterType="map">
+ 		INSERT INTO `seller`
+ 		(
+ 			`nickname`
+ 			,`profileImageUrl`
+ 			,`temperature`
+ 			,`createdAt`
+ 			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{nickname}
+ 			,#{profileImageUrl}
+ 			,#{temperature}
+ 			,now()
+ 			,now()
+ 		)
+ 	</insert>
+ 	
+ 	<select id="getSeller" resultType="com.jg.test.lesson04.model.Seller" parameterType="int">
+ 		SELECT
+ 				`nickname`
+ 				,`profileImageUrl`
+ 				,`temperature`
+ 		FROM
+ 				`seller`
+ 		WHERE
+ 				`id`=#{id}
+ 	</select>
+ </mapper>
