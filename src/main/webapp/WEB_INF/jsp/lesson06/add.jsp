@@ -20,30 +20,86 @@
   crossorigin="anonymous"></script>
 <body>
 	<h1>라이센스 정보 추가하기</h1>
-	<form method="post" action="/lesson06/test/add" id="joinForm">
-		<label>이름</label><input type="text" name="name" class="form-control" id="nameInput"><br>
+	
+		<label>이름</label><input type="text" name="name" class="form-control" id="nameInput"> <button type="button" id="duplicateBtn" class="btn">중복확인</button>
+		<div id="check" class="d-none">중복입니다.</div><br>
 		<label>자격증</label><input type="text" name="license" class="form-control" id="licenseInput"><br>
 		<label>점수</label><input type="text" name="score" class="form-control" id="scoreInput"><br>
-		<button type="button" class="btn" id="submitBtn">등록</button>
-	</form>
+		<button type="click" class="btn" id="submitBtn">등록</button>
+
 	
 	<script>
 		$(document).ready(function(){
+			
 			$("#submitBtn").on("click",function(){
+				let name = $("#nameInput").val();
+				let license = $("#licenseInput").val();
+				let score = $("#scoreInput").val();
+				var url="/lesson06/test/view"
+				
+				if(name == ""){
+					alert("이름을 입력하시오");
+					return false;
+				}
+				if(license == ""){
+					alert("자격증을 입력하시오");
+					return false;
+				}
+				if(score == ""){
+					alert("점수를 입력하시오");
+					return false;
+				}
+				
 				$.ajax({
 					type:"post",
 					url:"/lesson06/test/add",
-					data:{"name":name, "license":license, "score":score},
+					data:{"name":name, "license":license,"score":score},
 					success:function(data){
-						alert(data);
+						if(data == "success"){
+							alert("입력 성공");
+							$(location).attr('href',url);
+						}
+						else{
+							alert("입력 실패")
+						}
+						
 					},
 					error:function(){
 						alert("에러발생");
 					}
-				})
+				});
 				return false;
-			})
-		})}
+			});
+			
+			$("#duplicateBtn").on("click",function(){
+				let name = $("#nameInput").val();
+				
+				if(name == ""){
+					alert("이름을 입력하시오");
+					return false;
+				}
+				$.ajax({
+					type:"get",
+					url:"/lesson06/test/duplicate_name",
+					data:{"name":name},
+					success:function(data){
+						if(data.isDuplicate == "true"){
+							alert("중복입니다.");
+							$("#check").removeClass("d-none");
+						}
+						else{
+							alert("사용 가능");
+							$("#check").addClass("d-none");
+						}
+					},
+					error:function(){
+						alert("에러발생");
+					}
+				});
+			});
+			
+			
+		});
 	</script>
 </body>
 </html>

@@ -19,4 +19,32 @@
  		
  		
  	</insert>
+ 	
+ 	<select id="selectEntrant" resultType="com.jg.test.lesson06.model.Entrant">
+ 		SELECT
+ 			`id`
+ 			,`name`
+ 			,`license`
+ 			,`score`
+ 		FROM
+ 			`entrant`
+ 	
+ 	</select>
+ 	
+ 	<select id="selectCountName" parameterType="string" resultType="int">
+ 		SELECT
+ 			count(*)
+ 		FROM
+ 			`entrant`
+ 		WHERE
+ 			`name` = #{name}
+ 	</select>
+ 	
+ 	<delete id="deleteEntrant" parameterType="int">
+ 		DELETE
+ 		FROM
+ 			`entrant`
+ 		WHERE
+ 			`id` = #{id}
+ 	</delete>
  </mapper>

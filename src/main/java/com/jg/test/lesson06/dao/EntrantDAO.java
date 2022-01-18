@@ -1,8 +1,11 @@
 package com.jg.test.lesson06.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import com.jg.test.lesson06.model.Entrant;
 
 @Repository
 public interface EntrantDAO {
@@ -12,4 +15,10 @@ public interface EntrantDAO {
 				@Param("license") String license,
 				@Param("score") int score
 				);
+		
+		public List<Entrant> selectEntrant();
+		
+		public int selectCountName(@Param("name") String name);
+		
+		public int deleteEntrant(@Param("id") int id);
 }
